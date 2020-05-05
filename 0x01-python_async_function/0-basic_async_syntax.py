@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 ''' Define wait_random function. '''
 
-from asyncio import sleep, run
+from asyncio import sleep
 from random import random
 
 
