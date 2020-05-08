@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-''' Define FIFOCache class. '''
+''' Define LIFOCache class. '''
 
 BaseCaching = __import__('base_cache').BaseCaching
 
