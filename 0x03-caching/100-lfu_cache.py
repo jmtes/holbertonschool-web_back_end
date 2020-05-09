@@ -53,6 +53,10 @@ class LFUCache(BaseCaching):
         return None
 
     def findLFU(self):
+        ''' Return key of least frequently used item in cache.
+
+            If multiple items have the same amount of uses, return the least
+            recently used one. '''
         items = list(self.uses.items())
         freqs = [item[1] for item in items]
         least = min(freqs)
