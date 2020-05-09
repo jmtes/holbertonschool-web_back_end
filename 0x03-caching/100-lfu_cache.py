@@ -29,12 +29,6 @@ class LFUCache(BaseCaching):
             If cache is at max capacity (specified by BaseCaching.MAX_ITEMS),
             discard least frequently used entry to accommodate new entry. '''
 
-        # if len(self.cache_data) > BaseCaching.MAX_ITEMS and key not in
-        # self.cache_data:
-
-        # self.cache_data[key] = item
-        # self.uses[key] = self.uses[key] + 1 if key in self.uses else 0
-
         if key is not None and item is not None:
             if len(self.keys) == BaseCaching.MAX_ITEMS and key not in self.keys:
                 discard = self.keys.pop(self.keys.index(self.findLFU()))
@@ -62,11 +56,6 @@ class LFUCache(BaseCaching):
         items = list(self.uses.items())
         freqs = [item[1] for item in items]
         least = min(freqs)
-
-        # print('Inside findLFU')
-        # print('items is', items)
-        # print('freqs is', freqs)
-        # print('least is', least)
 
         lfus = [item[0] for item in items if item[1] == least]
         for key in self.keys:
