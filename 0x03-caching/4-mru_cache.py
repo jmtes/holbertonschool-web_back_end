@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 ''' Define MRUCache class. '''
 
-BaseCaching = __import__('base_cache').BaseCaching
+BaseCaching = __import__('base_caching').BaseCaching
 
 
 class MRUCache(BaseCaching):
