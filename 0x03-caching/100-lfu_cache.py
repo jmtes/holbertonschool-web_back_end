@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 ''' Define LFUCache class. '''
 
 BaseCaching = __import__('base_cache').BaseCaching
