@@ -6,6 +6,8 @@ from typing import List
 from re import sub
 
 
+PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'ip')
+
 def filter_datum(fields: List[str], redaction: str, message: str,
                  separator: str) -> str:
     ''' Return `message` with personally identifiable information redacted. '''
@@ -13,6 +15,18 @@ def filter_datum(fields: List[str], redaction: str, message: str,
     return sub(regex, lambda x: x.group(1) + '=' + redaction
                if x.group(1) in fields else x.group(), message)
 
+def get_logger() -> logging.Logger:
+  ''' Set up and return logger object. '''
+  log = logging.getLogger('user_data')
+  log.setLevel(logging.INFO)
+  log.propagate = False
+  
+  sh = logging.StreamHandler()
+  formatter = RedactingFormatter(PII_FIELDS)
+  sh.setFormatter(formatter)
+  log.addHandler(sh)
+
+  return log
 
 class RedactingFormatter(logging.Formatter):
     ''' Define behaviors for obfuscating PII.
