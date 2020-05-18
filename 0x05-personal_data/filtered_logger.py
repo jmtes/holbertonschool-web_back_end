@@ -45,7 +45,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
 
 
 def main() -> None:
-    ''' Documentation '''
+    ''' Log user info from database. '''
     db = get_db()
     cursor = db.cursor()
 
