@@ -12,9 +12,9 @@ PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'ip')
 def filter_datum(fields: List[str], redaction: str, message: str,
                  separator: str) -> str:
     ''' Return `message` with personally identifiable information redacted. '''
-    regex = r'(\w+)=([\w\-./]+@*[\w\-./]+)'
-    return re.sub(regex, lambda x: x.group(1) + '=' + redaction
-               if x.group(1) in fields else x.group(), message)
+    return re.sub(
+        r'(\w+)=([\w\-./]+@*[\w\-./]+)', lambda x: x.group(1) + '=' + redaction
+        if x.group(1) in fields else x.group(), message)
 
 
 def get_logger() -> logging.Logger:
