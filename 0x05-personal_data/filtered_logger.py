@@ -44,6 +44,26 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     return connector
 
 
+def main() -> None:
+    ''' Documentation '''
+    db = get_db()
+    cursor = db.cursor()
+
+    query = ('SELECT * FROM users')
+    cursor.execute(query)
+
+    format_1 = 'name={:s}; email={:s}; phone={:s}; ssn={:s}; password={:s}; '
+    format_2 = 'ip={:s}; last_login={}; user_agent={:s};'
+    format_str = format_1 + format_2
+    for (name, email, phone, ssn, password, ip, last_login, user_agent) \
+            in cursor:
+        print(format_str.format(name, email, phone, ssn, password, ip,
+                                last_login, user_agent))
+
+    cursor.close()
+    db.close()
+
+
 class RedactingFormatter(logging.Formatter):
     ''' Define behaviors for obfuscating PII.
 
@@ -73,3 +93,7 @@ class RedactingFormatter(logging.Formatter):
                 RedactingFormatter,
                 self).format(record),
             self.SEPARATOR)
+
+
+if __name__ == '__main__':
+    main()
