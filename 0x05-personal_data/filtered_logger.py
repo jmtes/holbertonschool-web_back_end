@@ -3,7 +3,7 @@
 
 import logging
 from typing import List
-from re import sub
+import re
 
 
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'ip')
@@ -13,7 +13,7 @@ def filter_datum(fields: List[str], redaction: str, message: str,
                  separator: str) -> str:
     ''' Return `message` with personally identifiable information redacted. '''
     regex = r'(\w+)=([\w\-./]+@*[\w\-./]+)'
-    return sub(regex, lambda x: x.group(1) + '=' + redaction
+    return re.sub(regex, lambda x: x.group(1) + '=' + redaction
                if x.group(1) in fields else x.group(), message)
 
 
