@@ -24,7 +24,7 @@ class BasicAuth(Auth):
             return None
 
         try:
-            b64_byte_header = base64_authorization_header.encode('utf-8')
+            b64_byte_header = base64_authorization_header.encode('ascii')
             byte_header = b64decode(b64_byte_header)
             header = byte_header.decode('utf-8')
             return header
