@@ -40,7 +40,7 @@ class Base():
         """
         if type(self) != type(other):
             return False
-        if not isintanceof(Base):
+        if not isinstance(other, Base):
             return False
         return (self.id == other.id)
 
