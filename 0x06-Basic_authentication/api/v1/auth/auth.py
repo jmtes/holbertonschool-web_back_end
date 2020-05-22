@@ -11,7 +11,7 @@ class Auth:
         Methods:
           require_auth - Check if path requires authentication
           authorization_header - Check if request is authorized
-          current_user - '''
+          current_user - Return current user '''
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         ''' Determine whether or not path requires authentication.
