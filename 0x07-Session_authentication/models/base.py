@@ -134,4 +134,7 @@ class Base():
                     return False
             return True
         
-        return list(filter(_search, DATA[s_class].values()))
+        try:
+            return list(filter(_search, DATA[s_class].values()))
+        except KeyError:
+            return []
