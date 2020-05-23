@@ -54,4 +54,4 @@ class Auth:
 
         cookie_key = getenv('SESSION_NAME')
 
-        return request.cookies.get(cookie_key)
+        return request.cookies.get(cookie_key, None)
