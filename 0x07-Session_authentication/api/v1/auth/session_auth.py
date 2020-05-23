@@ -2,6 +2,7 @@
 ''' Define SessionAuth class. '''
 
 from api.v1.auth.auth import Auth
+from models.user import User
 from uuid import uuid4
 
 
@@ -25,3 +26,13 @@ class SessionAuth(Auth):
             return None
 
         return SessionAuth.user_id_by_session_id.get(session_id)
+
+    def current_user(self, request=None):
+        ''' Return User instance based on request cookie value. '''
+        # Get session ID from request cookie
+        session_id = self.session_cookie(request)
+
+        # Get user ID associated with session ID
+        user_id = self.user_id_for_session_id(session_id)
+
+        return User.get(user_id)
