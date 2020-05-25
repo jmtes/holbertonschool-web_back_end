@@ -52,6 +52,7 @@ def forbidden(error) -> str:
     return jsonify({'error': 'Forbidden'}), 403
 
 
+@app.before_request
 def before_request() -> None:
     ''' Check whether or not requested path requires authentication and, if so,
         check whether or not user is authorized. '''
@@ -71,8 +72,6 @@ def before_request() -> None:
             if request.current_user is None:
                 abort(403)
 
-
-app.before_request(before_request)
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
