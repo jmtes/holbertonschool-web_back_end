@@ -32,6 +32,9 @@ def auth_session_login() -> str:
     if not found_user.is_valid_password(user_pwd):
         return jsonify({'error': 'wrong password'}), 401
 
+    # Import auth
+    from api.v1.app import auth
+
     # Create session ID for user
     session_id = auth.create_session(found_user.id)
 
@@ -49,6 +52,7 @@ def auth_session_login() -> str:
                  strict_slashes=False)
 def auth_session_logout() -> str:
     ''' Destroy session and log user out. '''
+    from api.v1.app import auth
     if auth.destroy_session(request):
         return jsonify({}), 200
     abort(404)
