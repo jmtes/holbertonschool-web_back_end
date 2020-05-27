@@ -3,7 +3,6 @@
 
 from api.v1.views import app_views
 from models.user import User
-from api.v1.app import auth
 from flask import request, jsonify, abort
 from os import getenv
 
