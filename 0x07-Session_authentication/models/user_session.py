@@ -5,7 +5,8 @@ from models.base import Base
 
 
 class UserSession(Base):
-    ''' Extend behaviors of Base class for session authentication using a DB. '''
+    ''' Extend behaviors of Base class for session authentication using a DB.
+    '''
 
     def __init__(self, *args: list, **kwargs: dict):
         ''' Initialize class instance. '''
