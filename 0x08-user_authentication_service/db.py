@@ -55,7 +55,10 @@ class DB:
         ''' Update user information. '''
         user = self.find_user_by(id=user_id)
 
+        valid_columns = ['id', 'email', 'hashed_password', 'session_id',
+                         'reset_token']
         for key, val in kwargs.items():
-            setattr(user, key, val)
+            if key in valid_columns:
+                setattr(user, key, val)
 
         self._session.commit()
