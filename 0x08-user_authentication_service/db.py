@@ -6,6 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
+import bcrypt
 
 from user import Base, User
 
@@ -51,7 +52,7 @@ class DB:
             raise NoResultFound
         return found_user
 
-    def update_user(self, user_id, **kwargs) -> None:
+    def update_user(self, user_id: str, **kwargs) -> None:
         ''' Update user information. '''
         user = self.find_user_by(id=user_id)
 
