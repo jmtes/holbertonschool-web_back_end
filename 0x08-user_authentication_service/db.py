@@ -58,7 +58,8 @@ class DB:
         valid_columns = ['id', 'email', 'hashed_password', 'session_id',
                          'reset_token']
         for key, val in kwargs.items():
-            if key in valid_columns:
-                setattr(user, key, val)
+            if key not in valid_columns:
+                raise ValueError
+            setattr(user, key, val)
 
         self._session.commit()
