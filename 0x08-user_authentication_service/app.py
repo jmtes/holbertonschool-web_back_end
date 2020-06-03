@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 ''' Set up and run Flask app. '''
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, abort
 from auth import Auth
 
 app = Flask(__name__)
@@ -28,7 +28,23 @@ def register_user() -> str:
             password - user password
 
         Return: User email '''
-    pass
+    try:
+        data = request.get_json()
+        if data is None:
+            return jsonify({'message': 'please use json'}), 400
+    except Exception as e:
+        return jsonify({'message': 'bad request'}), 400
+    if 'email' in data and 'password' in data:
+        try:
+            print(data)
+            new_user = AUTH.register_user(data['email'], data['password'])
+            return jsonify({
+                'email': new_user.email,
+                'message': 'user created'
+                }), 201
+        except ValueError:
+            return jsonify({'message': 'email already registered'}), 400
+    return jsonify({'message': 'please provide an email and password'}), 400
 
 
 if __name__ == '__main__':
