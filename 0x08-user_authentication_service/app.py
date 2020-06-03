@@ -32,7 +32,7 @@ def register_user() -> str:
         data = request.get_json()
         if data is None:
             return jsonify({'message': 'please use json'}), 400
-    except Exception as e:
+    except Exception:
         return jsonify({'message': 'bad request'}), 400
     if 'email' in data and 'password' in data:
         try:
