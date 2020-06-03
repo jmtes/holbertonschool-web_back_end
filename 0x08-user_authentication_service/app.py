@@ -47,5 +47,37 @@ def register_user() -> str:
     return jsonify({'message': 'please provide an email and password'}), 400
 
 
+@app.route('/sessions', methods=['POST'], strict_slashes=False)
+def login() -> str:
+    ''' POST /sessions
+
+        JSON Body:
+            email - user email
+            password - user password
+
+        Return: User email
+    '''
+    try:
+        data = request.get_json()
+        if data is None:
+            return jsonify({'message': 'please use json'}), 400
+    except Exception:
+        abort(400)
+    if 'email' and 'password' in data:
+        if AUTH.valid_login(data['email'], data['password']):
+            session_id = AUTH.create_session(data['email'])
+
+            res = jsonify({
+                    'email': data['email'],
+                    'message': 'logged in'
+                    })
+            res.set_cookie('session_id', session_id)
+
+            return res
+        else:
+            abort(401)
+    return jsonify({'message': 'please provide an email and password'}), 400
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')
