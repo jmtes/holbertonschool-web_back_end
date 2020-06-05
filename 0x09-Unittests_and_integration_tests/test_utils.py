@@ -17,4 +17,4 @@ class TestAccessNestedMap(TestCase):
     def test_access_nested_map(self, input_map, input_path, expected_output):
         ''' Test utils.access_nested_map '''
         actual = access_nested_map(input_map, input_path)
-        assert actual == expected_output
+        self.assertEqual(actual, expected_output)
