@@ -2,7 +2,7 @@
 ''' Define Cache class for use with Redis. '''
 
 import redis
-from typing import Union, Optional, Callable
+from typing import Union, Optional, Callable, List
 from uuid import uuid4
 from sys import byteorder
 from functools import wraps
@@ -37,6 +37,22 @@ def call_history(method: Callable) -> Callable:
     return wrapper
 
 
+def replay(method: Callable) -> None:
+    ''' Show history of calls to `method` and their outputs. '''
+    ins = method.__self__
+    count_key = method.__qualname__
+    in_key = method.__qualname__ + ':inputs'
+    out_key = method.__qualname__ + ':outputs'
+
+    times_called = ins.get(count_key).decode('utf-8')
+    history = list(zip(ins.get_list(in_key), ins.get_list(out_key)))
+
+    print('{} was called {} times:'.format(count_key, times_called))
+    for call in history:
+        print('{}(*{}) -> {}'.format(count_key, call[0].decode('utf-8'),
+                                     call[1].decode('utf-8')))
+
+
 class Cache:
     ''' Cache class for use with Redis. '''
 
@@ -64,6 +80,10 @@ class Cache:
             data = fn(data)
 
         return data
+
+    def get_list(self, key: str) -> List:
+        ''' Get list from Redis store. '''
+        return self._redis.lrange(key, 0, -1)
 
     def get_str(b: bytes) -> str:
         ''' Convert bytes to string. '''
