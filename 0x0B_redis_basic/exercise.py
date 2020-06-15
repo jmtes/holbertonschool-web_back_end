@@ -7,6 +7,18 @@ from uuid import uuid4
 from sys import byteorder
 
 
+def count_calls(method: Callable) -> Callable:
+    ''' Track number of calls to method. '''
+    key = method.__qualname__
+
+    def wrapper(self, *args, **kwargs):
+        ''' Wrapper for function. '''
+        self._redis.incr(key)
+        return method(self, *args, **kwargs)
+
+    return wrapper
+
+
 class Cache:
     ''' Cache class for use with Redis. '''
 
@@ -15,6 +27,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         ''' Store data in Redis store. '''
         key = str(uuid4())
