@@ -2,8 +2,9 @@
 ''' Define Cache class for use with Redis. '''
 
 import redis
-from typing import Union
+from typing import Union, Optional, Callable
 from uuid import uuid4
+from sys import byteorder
 
 
 class Cache:
@@ -19,3 +20,23 @@ class Cache:
         key = str(uuid4())
         self._redis.set(key, data)
         return key
+
+    def get(self, key: str, fn: Optional[Callable] = None) -> Union[str,
+                                                                    bytes,
+                                                                    int,
+                                                                    float]:
+        ''' Get data from Redis store. '''
+        data = self._redis.get(key)
+
+        if fn:
+            data = fn(data)
+
+        return data
+
+    def get_str(b: bytes) -> str:
+        ''' Convert bytes to string. '''
+        return b.decode('utf-8')
+
+    def get_int(b: bytes) -> str:
+        ''' Convert bytes to integer. '''
+        return int.from_bytes(b, byteorder)
