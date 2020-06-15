@@ -5,12 +5,14 @@ import redis
 from typing import Union, Optional, Callable
 from uuid import uuid4
 from sys import byteorder
+from functools import wraps
 
 
 def count_calls(method: Callable) -> Callable:
     ''' Track number of calls to method. '''
     key = method.__qualname__
 
+    @wraps(method)
     def wrapper(self, *args, **kwargs):
         ''' Wrapper for function. '''
         self._redis.incr(key)
