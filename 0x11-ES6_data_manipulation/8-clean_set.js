@@ -3,8 +3,8 @@ export default function cleanSet(set, startString) {
 
   if (startString) {
     for (const item of set) {
-      if (item.startsWith(startString)) {
-        string += `${item.split(startString)[1]}-`;
+      if (typeof item === 'string' && item.startsWith(startString)) {
+        string += `${item.substring(startString.length)}-`;
       }
     }
   }
