@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha --exit"
+  },
+  "devDependencies": {
+    "mocha": "^8.0.1"
+  }
+}
