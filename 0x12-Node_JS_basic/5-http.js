@@ -1,6 +1,8 @@
 const http = require('http');
 const fs = require('fs');
 
+const dbPath = process.argv[2];
+
 function countStudents(path) {
   return new Promise((resolve, reject) => {
     fs.readFile(path, { encoding: 'utf-8' }, (err, data) => {
@@ -47,7 +49,7 @@ const app = http
       res.write('Hello Holberton School!');
       res.end();
     } else if (req.url === '/students' && req.method === 'GET') {
-      countStudents('database.csv')
+      countStudents(dbPath)
         .then(
           // eslint-disable-next-line
           ({ totalStudents, csCount, csStudents, sweCount, sweStudents }) => {
@@ -59,7 +61,7 @@ const app = http
             );
             res.write(
               // eslint-disable-next-line
-              `Number of students in SWE: ${sweCount}. List: ${sweStudents}`
+              `Number of students in SWE: ${sweCount}. List: ${sweStudents}\n`
             );
             res.end();
             // eslint-disable-next-line
