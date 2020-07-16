@@ -2,7 +2,6 @@ const assert = require('assert');
 const mocha = require('mocha');
 
 const calculateNumber = require('./1-calcul');
-const { DiffieHellman } = require('crypto');
 
 const SUM = 'SUM';
 const SUBTRACT = 'SUBTRACT';
