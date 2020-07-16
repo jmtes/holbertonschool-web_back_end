@@ -4,6 +4,7 @@ const sinon = require('sinon');
 
 const utils = require('./utils');
 const sendPaymentRequestToApi = require('./3-payment');
+const { spy } = require('sinon');
 
 describe('sendPaymentRequestToApi', () => {
   it('should call calculateNumber', () => {
@@ -15,5 +16,8 @@ describe('sendPaymentRequestToApi', () => {
     expect(calcNumSpy.calledOnceWithExactly('SUM', 100, 20)).to.equal(true);
     expect(consoleSpy.calledWithExactly('The total is: 120')).to.equal(true);
     expect(utils.calculateNumber('SUM', 100, 20)).to.equal(apiRequestRes);
+
+    calcNumSpy.restore();
+    consoleSpy.restore();
   });
 });
