@@ -55,7 +55,7 @@ jobs.forEach((job) => {
 
   newJob.on('complete', () => console.log(`Notification job ${newJob.id} completed`));
 
-  newJob.on('failed', (err) => console.log(`Notification job ${newJob.id} failed: ${err.name}`));
+  newJob.on('failed', (err) => { console.log(`Notification job ${newJob.id} failed: ${err}`); });
 
   newJob.on('progress', (progress) => console.log(`Notification job ${newJob.id} ${progress}% complete`));
 });
